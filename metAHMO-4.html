@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>metAHMO — Reto STEAM Jalisco 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --transition: 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  [data-theme="dark"] {
+    --bg:          #0b1a12;
+    --bg2:         #0f2218;
+    --bg3:         #142d1f;
+    --surface:     #1a3828;
+    --surface2:    #1f4230;
+    --border:      #2d6645;
+    --accent:      #4db87a;
+    --accent2:     #7ecfa4;
+    --accent3:     #c6e8b4;
+    --gold:        #c8a84b;
+    --gold2:       #e5c97a;
+    --text:        #dff0e8;
+    --text2:       #9dc8b0;
+    --text3:       #6a9e83;
+    --muted:       #3d6b52;
+    --overlay:     rgba(11,26,18,0.85);
+    --card-bg:     rgba(26,56,40,0.7);
+    --card-border: rgba(77,184,122,0.2);
+    --glow:        rgba(77,184,122,0.15);
+    --noise-op:    0.03;
+  }
+
+  [data-theme="light"] {
+    --bg:          #f0f7f2;
+    --bg2:         #e4f0e8;
+    --bg3:         #d8ead e;
+    --surface:     #ffffff;
+    --surface2:    #f5fbf7;
+    --border:      #a8d4bb;
+    --accent:      #2a7d50;
+    --accent2:     #3a9e68;
+    --accent3:     #1d5c3a;
+    --gold:        #9e7a2a;
+    --gold2:       #b89040;
+    --text:        #0f2a1c;
+    --text2:       #2d5e42;
+    --text3:       #5a8c70;
+    --muted:       #7ab89a;
+    --overlay:     rgba(240,247,242,0.92);
+    --card-bg:     rgba(255,255,255,0.8);
+    --card-border: rgba(42,125,80,0.2);
+    --glow:        rgba(42,125,80,0.1);
+    --noise-op:    0.015;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: var(--noise-op);
+  }
+
+  /* ── ANIMATED RIPPLE BG ── */
+  .ripple-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .ripple-bg span {
+    position: absolute; border-radius: 50%; border: 1px solid var(--accent);
+    opacity: 0; animation: ripple 12s infinite ease-out;
+  }
+  .ripple-bg span:nth-child(1){ width:200px;height:200px; top:20%;left:10%; animation-delay:0s; }
+  .ripple-bg span:nth-child(2){ width:350px;height:350px; top:50%;left:60%; animation-delay:3s; }
+  .ripple-bg span:nth-child(3){ width:120px;height:120px; top:70%;left:25%; animation-delay:6s; }
+  .ripple-bg span:nth-child(4){ width:280px;height:280px; top:10%;left:75%; animation-delay:9s; }
+  @keyframes ripple {
+    0%  { transform:scale(0.5); opacity:0.4; }
+    100%{ transform:scale(3);   opacity:0; }
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:1000;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 0 2rem;
+    height: 64px;
+    background: var(--overlay);
+    backdrop-filter: blur(20px) saturate(1.5);
+    border-bottom: 1px solid var(--card-border);
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .nav-logo .dot { color: var(--gold); }
+  .nav-links {
+    display:flex; gap:0.25rem; align-items:center; list-style:none;
+  }
+  .nav-links a {
+    text-decoration:none;
+    color: var(--text2);
+    font-size:0.9rem;
+    font-family:'Space Mono', monospace;
+    padding:0.35rem 0.75rem;
+    border-radius:6px;
+    transition: color 0.2s, background 0.2s;
+    letter-spacing:0.02em;
+  }
+  .nav-links a:hover {
+    color: var(--accent);
+    background: var(--glow);
+  }
+  .nav-right { display:flex; align-items:center; gap:0.75rem; }
+
+  /* THEME TOGGLE */
+  .theme-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.3rem 0.8rem;
+    cursor:pointer;
+    display:flex; align-items:center; gap:0.4rem;
+    font-size:0.8rem;
+    font-family:'Space Mono',monospace;
+    color: var(--text2);
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-icon { width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center; }
+  .theme-icon svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .bene-icon svg, .loc-icon-svg svg, .step-icon svg, .modal-icon svg, .lang-flag svg { display:block; }
+  .bene-icon { display:flex; align-items:center; justify-content:center; margin-bottom:1rem; }
+  .loc-icon { font-size:unset; display:flex; align-items:center; justify-content:center; flex-shrink:0; width:5rem; }
+  .flow-arrow-svg { display:flex; justify-content:center; margin:0.2rem 0; color:var(--accent); }
+  .flow-arrow-svg svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* HAMBURGER */
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { display:block; width:22px; height:2px; background:var(--text2); border-radius:2px; transition:all 0.3s; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding: 6rem 2rem 4rem;
+    position:relative; z-index:1;
+  }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius:50px;
+    padding:0.35rem 1rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.72rem;
+    color: var(--accent2);
+    letter-spacing:0.08em;
+    margin-bottom:2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before { content:'◉'; color:var(--accent); font-size:0.6rem; }
+  .hero-title {
+    font-family:'Playfair Display', serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing:-0.04em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-title .main { color: var(--text); display:block; }
+  .hero-title .accent-word { color: var(--accent); }
+  .hero-title .gold-word { color: var(--gold); }
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--text2);
+    max-width: 560px;
+    margin: 1.5rem auto 2.5rem;
+    font-style: italic;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-tags {
+    display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center;
+    animation: fadeUp 0.8s 0.45s ease both;
+    margin-bottom: 3rem;
+  }
+  .tag {
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;
+    padding:0.3rem 0.7rem;
+    border-radius:4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text3);
+    letter-spacing:0.05em;
+  }
+  .hero-cta {
+    display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border:none;
+    padding:0.75rem 1.75rem;
+    border-radius:8px;
+    font-family:'Space Mono',monospace;
+    font-size:0.8rem;
+    cursor:pointer;
+    letter-spacing:0.04em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration:none; display:inline-block;
+    font-weight:700;
+  }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+  .btn-outline {
+    background:transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    padding:0.75rem 1.75rem;
+    border-radius:8px;
+    font-family:'Space Mono',monospace;
+    font-size:0.8rem;
+    cursor:pointer;
+    letter-spacing:0.04em;
+    transition: background 0.2s, color 0.2s;
+    text-decoration:none; display:inline-block;
+  }
+  .btn-outline:hover { background: var(--glow); }
+
+  .scroll-hint {
+    position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+    color:var(--muted); font-family:'Space Mono',monospace; font-size:0.65rem;
+    letter-spacing:0.08em; animation:bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* ── SECTIONS ── */
+  section { position:relative; z-index:1; padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin:0 auto; }
+  .section-label {
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    color: var(--accent);
+    margin-bottom:0.75rem;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .section-label::before { content:''; display:block; width:24px; height:1px; background:var(--accent); }
+  .section-title {
+    font-family:'Playfair Display',serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight:700;
+    line-height:1.1;
+    margin-bottom:2rem;
+    color: var(--text);
+  }
+  .section-title em { color:var(--accent); font-style:normal; }
+  .divider { width:100%; height:1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin:0; }
+
+  /* ── DESCRIPTION ── */
+  #descripcion { background: var(--bg); }
+  .desc-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start;
+  }
+  .desc-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius:16px;
+    padding:2rem;
+    backdrop-filter:blur(12px);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .desc-card:hover { transform:translateY(-4px); border-color:var(--accent); }
+  .desc-card .lang-badge {
+    font-family:'Space Mono',monospace; font-size:0.65rem;
+    color:var(--gold); letter-spacing:0.1em; margin-bottom:1rem;
+    display:flex; align-items:center; gap:0.4rem;
+  }
+  .desc-card p { font-size:1.05rem; color:var(--text2); margin-bottom:1rem; }
+  .desc-card .keywords {
+    display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1.25rem;
+  }
+
+  /* ── JUSTIFICATION ── */
+  #justificacion { background: var(--bg2); }
+  .just-content { columns:2; column-gap:3rem; }
+  .just-content p { font-size:1.05rem; color:var(--text2); margin-bottom:1.2rem; break-inside:avoid; }
+  .just-content strong { color:var(--accent); font-weight:600; }
+  .stat-row {
+    display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2.5rem; columns:1;
+    break-inside:avoid;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:1.5rem;
+    text-align:center;
+    backdrop-filter:blur(12px);
+  }
+  .stat-card .stat-num {
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem; font-weight:900; color:var(--gold);
+    display:block; line-height:1;
+  }
+  .stat-card .stat-label { font-size:0.85rem; color:var(--text3); margin-top:0.4rem; font-family:'Space Mono',monospace; font-size:0.7rem; }
+
+  /* ── OBJECTIVES ── */
+  #objetivos { background: var(--bg); }
+  .obj-main {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius:16px;
+    padding:2rem;
+    backdrop-filter:blur(12px);
+    margin-bottom:2rem;
+    font-size:1.1rem; color:var(--text2);
+  }
+  .obj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; }
+  .obj-item {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.5rem;
+    transition:border-color 0.2s, transform 0.2s;
+    cursor:pointer;
+  }
+  .obj-item:hover { border-color:var(--accent); transform:translateY(-2px); }
+  .obj-num { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--accent); margin-bottom:0.5rem; }
+  .obj-item h4 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; }
+  .obj-item p { font-size:0.95rem; color:var(--text3); }
+
+  /* ── METHODOLOGY ── */
+  #metodologia { background: var(--bg2); }
+  .method-steps { display:flex; flex-direction:column; gap:0; position:relative; }
+  .method-steps::before {
+    content:''; position:absolute; left:24px; top:0; bottom:0; width:2px;
+    background: linear-gradient(180deg, var(--accent), var(--gold), var(--accent));
+  }
+  .method-step {
+    display:flex; gap:2rem; padding:1.5rem 0 1.5rem 3rem; position:relative;
+    cursor:pointer;
+  }
+  .step-dot {
+    position:absolute; left:16px; top:2rem;
+    width:18px; height:18px; border-radius:50%;
+    background:var(--accent); border:3px solid var(--bg2);
+    flex-shrink:0;
+  }
+  .step-content {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:1.5rem;
+    flex:1; backdrop-filter:blur(12px);
+    transition:border-color 0.2s, transform 0.2s;
+  }
+  .method-step:hover .step-content { border-color:var(--accent); transform:translateX(4px); }
+  .step-content h3 { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--text); margin-bottom:0.75rem; }
+  .step-list { list-style:none; display:flex; flex-direction:column; gap:0.4rem; }
+  .step-list li { font-size:0.95rem; color:var(--text2); display:flex; gap:0.5rem; }
+  .step-list li::before { content:'→'; color:var(--accent); flex-shrink:0; }
+
+  /* ── BENEFICIARIES ── */
+  #beneficiarios { background:var(--bg); }
+  .bene-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .bene-card {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:2rem;
+    backdrop-filter:blur(12px);
+    text-align:center;
+    transition:transform 0.3s, border-color 0.3s;
+  }
+  .bene-card:hover { transform:translateY(-6px); border-color:var(--gold); }
+  .bene-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
+  .bene-card h3 { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:0.75rem; }
+  .bene-card p { font-size:0.95rem; color:var(--text3); }
+
+  /* ── COSTS ── */
+  #costos { background:var(--bg2); }
+  .cost-table {
+    width:100%; border-collapse:collapse; margin-top:1.5rem;
+    background:var(--card-bg); border-radius:16px; overflow:hidden;
+    backdrop-filter:blur(12px); border:1px solid var(--card-border);
+  }
+  .cost-table th {
+    padding:1rem 1.5rem; text-align:left;
+    background:var(--surface); font-family:'Space Mono',monospace;
+    font-size:0.75rem; letter-spacing:0.08em; color:var(--accent2);
+  }
+  .cost-table td { padding:1rem 1.5rem; border-top:1px solid var(--border); font-size:1rem; color:var(--text2); }
+  .cost-table tr:hover td { background:var(--glow); }
+  .cost-table .total td { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--gold); }
+  .cost-table .total { border-top:2px solid var(--gold); }
+
+  /* ── LOCATION ── */
+  #localizacion { background:var(--bg); }
+  .loc-card {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:2.5rem;
+    backdrop-filter:blur(12px);
+    display:flex; gap:3rem; align-items:center;
+  }
+  .loc-icon { font-size:5rem; flex-shrink:0; }
+  .loc-info h3 { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; }
+  .loc-info p { color:var(--text2); font-size:1.05rem; margin-bottom:0.75rem; }
+  .loc-info .loc-detail { font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--accent); }
+
+  /* ── TEAM ── */
+  #equipo { background:var(--bg2); }
+  .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .member-card {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:1.75rem;
+    backdrop-filter:blur(12px);
+    transition:transform 0.3s, border-color 0.3s;
+    cursor:pointer;
+  }
+  .member-card:hover { transform:translateY(-4px); border-color:var(--accent); }
+  .member-avatar {
+    width:56px; height:56px; border-radius:50%;
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:900;
+    color:var(--bg); margin-bottom:1rem;
+  }
+  .member-card h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--text); margin-bottom:0.25rem; }
+  .member-card .member-email { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--accent); margin-bottom:0.4rem; }
+  .member-card .member-detail { font-size:0.85rem; color:var(--text3); }
+  .advisor-card {
+    grid-column: 1/-1;
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border:1.5px solid var(--gold);
+    border-radius:16px;
+    padding:1.75rem 2rem;
+    display:flex; align-items:center; gap:2rem;
+    backdrop-filter:blur(12px);
+  }
+  .advisor-avatar {
+    width:64px; height:64px; border-radius:50%;
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:900;
+    color:var(--bg); flex-shrink:0;
+  }
+  .advisor-info .role { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--gold); letter-spacing:0.08em; margin-bottom:0.3rem; }
+  .advisor-info h3 { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:0.25rem; }
+  .advisor-info p { font-size:0.9rem; color:var(--text3); }
+
+  /* ── BIBLIOGRAPHY ── */
+  #bibliografia { background:var(--bg); }
+  .bib-list { display:flex; flex-direction:column; gap:0.75rem; }
+  .bib-item {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0.9rem 1.25rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.72rem;
+    color:var(--text3);
+    word-break:break-all;
+    transition:border-color 0.2s, color 0.2s;
+  }
+  .bib-item:hover { border-color:var(--accent); color:var(--accent); }
+  .bib-item a { color:inherit; text-decoration:none; }
+  .bib-num { color:var(--muted); margin-right:0.5rem; }
+
+  /* ── VIDEO ── */
+  #video { background:var(--bg2); }
+  .video-wrap {
+    max-width:700px; margin:0 auto;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:20px;
+    overflow:hidden;
+    backdrop-filter:blur(12px);
+  }
+  .video-embed { width:100%; aspect-ratio:16/9; border:none; }
+  .video-caption { padding:1.25rem 1.5rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--text3); }
+
+  /* ── FOOTER ── */
+  footer {
+    position:relative; z-index:1;
+    background:var(--bg3);
+    border-top:1px solid var(--border);
+    padding:3rem 2rem;
+    text-align:center;
+  }
+  .footer-logo { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:var(--accent); margin-bottom:0.5rem; }
+  .footer-team { font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--text3); letter-spacing:0.08em; }
+  .footer-copy { margin-top:1.5rem; font-size:0.85rem; color:var(--muted); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position:fixed; inset:0; z-index:2000;
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    padding:1rem;
+    opacity:0; pointer-events:none;
+    transition:opacity 0.3s;
+  }
+  .modal-overlay.open { opacity:1; pointer-events:auto; }
+  .modal-box {
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2.5rem;
+    max-width:600px; width:100%;
+    max-height:90vh; overflow-y:auto;
+    transform:translateY(20px);
+    transition:transform 0.3s;
+    position:relative;
+  }
+  .modal-overlay.open .modal-box { transform:translateY(0); }
+  .modal-close {
+    position:absolute; top:1.25rem; right:1.25rem;
+    background:var(--surface); border:1px solid var(--border);
+    width:32px; height:32px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:1rem; color:var(--text3);
+    transition:border-color 0.2s, color 0.2s;
+  }
+  .modal-close:hover { border-color:var(--accent); color:var(--accent); }
+  .modal-title { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; }
+  .modal-sub { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--accent); letter-spacing:0.08em; margin-bottom:1.5rem; }
+  .modal-body { font-size:1rem; color:var(--text2); line-height:1.7; }
+  .modal-body p { margin-bottom:1rem; }
+  .modal-body ul { list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem; }
+  .modal-body ul li::before { content:'◆ '; color:var(--accent); font-size:0.7rem; }
+  .modal-body strong { color:var(--accent); }
+
+  /* ── DIAGRAM SECTION ── */
+  #diagrama { background:var(--bg); }
+  .diagram-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  .diagram-card {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:2rem;
+    backdrop-filter:blur(12px);
+  }
+  .diagram-card h3 { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.5rem; }
+  /* Flow diagram */
+  .flow { display:flex; flex-direction:column; align-items:center; gap:0; }
+  .flow-node {
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    border-radius:8px;
+    padding:0.75rem 1.5rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.8rem;
+    color:var(--text);
+    text-align:center;
+    width:80%;
+  }
+  .flow-arrow { font-size:1.2rem; color:var(--accent); margin:0.2rem 0; }
+  .flow-bullets {
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:0.5rem 1rem;
+    font-size:0.8rem;
+    color:var(--text3);
+    width:70%;
+    text-align:left;
+    margin-top:0.2rem;
+    margin-bottom:0.5rem;
+  }
+  .flow-bullets li { list-style:none; display:flex; gap:0.3rem; }
+  .flow-bullets li::before { content:'•'; color:var(--accent2); }
+  /* Bioreactor diagram */
+  .bioreactor {
+    display:flex; flex-direction:column; align-items:center; gap:0;
+    font-family:'Space Mono',monospace; font-size:0.72rem;
+  }
+  .bio-top {
+    width:200px; height:60px;
+    background:linear-gradient(180deg, var(--surface), var(--surface2));
+    border:2px solid var(--accent);
+    border-radius:8px 8px 0 0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:0.2rem; color:var(--accent2);
+  }
+  .bio-body {
+    width:240px; min-height:120px;
+    background:linear-gradient(180deg, var(--surface2), var(--surface));
+    border:2px solid var(--accent); border-top:none; border-bottom:none;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; color:var(--text3);
+  }
+  .bio-side {
+    position:absolute; right:-100px; top:30px;
+    color:var(--text3); display:flex; align-items:center; gap:0.3rem;
+    font-size:0.68rem;
+  }
+  .bio-side::before { content:'→'; color:var(--gold); }
+  .bio-bottom {
+    width:200px; height:50px;
+    background:linear-gradient(180deg, var(--surface2), var(--surface));
+    border:2px solid var(--accent);
+    border-radius:0 0 8px 8px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text3); gap:0.3rem;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .reveal { opacity:0; transform:translateY(32px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .nav-links.open { display:flex; flex-direction:column; position:absolute; top:64px; left:0; right:0; background:var(--overlay); backdrop-filter:blur(20px); padding:1rem; border-bottom:1px solid var(--border); }
+    .desc-grid, .obj-grid, .team-grid, .bene-grid, .diagram-grid { grid-template-columns:1fr; }
+    .just-content { columns:1; }
+    .stat-row { grid-template-columns:1fr 1fr; }
+    .loc-card { flex-direction:column; gap:1rem; }
+    .advisor-card { flex-direction:column; }
+    .hero-title { font-size:clamp(3rem,18vw,5rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- RIPPLE BACKGROUND -->
+<div class="ripple-bg" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#inicio">met<span class="dot">A</span>HMO</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#descripcion">Descripción</a></li>
+    <li><a href="#justificacion">Justificación</a></li>
+    <li><a href="#objetivos">Objetivos</a></li>
+    <li><a href="#metodologia">Metodología</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#bibliografia">Bibliografía</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+      <span class="theme-icon" id="themeIcon"><!-- sun icon, toggled by JS -->
+        <svg id="iconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="iconMoon" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+      <span id="themeLabel">Claro</span>
+    </button>
+    <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════ HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-badge">RETO STEAM JALISCO 2025 — BIOTECH'S</div>
+  <h1 class="hero-title">
+    <span class="main">met<span class="accent-word">A</span><span class="gold-word">H</span>MO</span>
+  </h1>
+  <p class="hero-subtitle">
+    Biogás renovable a partir de vinaza tequilera.<br>
+    <em>Energía limpia desde lo invisible.</em>
+  </p>
+  <div class="hero-tags">
+    <span class="tag">BIORREACTOR</span>
+    <span class="tag">VINAZA</span>
+    <span class="tag">BIODIGESTIÓN</span>
+    <span class="tag">METANO</span>
+    <span class="tag">BIOGÁS</span>
+    <span class="tag">JALISCO</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn-primary" href="#descripcion">Explorar Proyecto</a>
+    <button class="btn-outline" onclick="openModal('modal-video')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;vertical-align:-2px;margin-right:5px"><polygon points="5 3 19 12 5 21 5 3"/></svg>Ver Video</button>
+  </div>
+  <div class="scroll-hint">SCROLL<br>▼</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ DESCRIPCIÓN -->
+<section id="descripcion">
+  <div class="section-inner reveal">
+    <div class="section-label">02 / DESCRIPCIÓN DEL PROYECTO</div>
+    <h2 class="section-title">¿Qué es <em>metAHMO</em>?</h2>
+    <div class="desc-grid">
+      <div class="desc-card">
+        <div class="lang-badge">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;flex-shrink:0"><rect width="6" height="14" fill="#006847"/><rect x="6" width="6" height="14" fill="#FFFFFF"/><rect x="12" width="6" height="14" fill="#CE1126"/></svg>
+          ESPAÑOL
+        <p>Nuestro proyecto consiste en la creación de un <strong>bioreactor de 80 litros</strong> para la producción de biogás, una fuente de energía limpia y sustentable obtenida a partir de la <strong>vinaza</strong>, un subproducto de la industria tequilera.</p>
+        <p>Este sistema aprovechará la <strong>biodigestión anaerobia</strong> para convertir este residuo líquido en gas metano utilizable como combustible. No solo nos enfocamos en la eficiencia tecnológica, sino también en un diseño limpio y moderno que facilite su integración y uso.</p>
+        <p>Elegimos el nombre <strong>"MetAhmo"</strong> porque refleja la esencia del proyecto: la primera parte hace referencia al metano, el principal combustible generado, mientras que "Ahmo", en náhuatl, significa negación y en algunas interpretaciones se asocia con lo no visible, tal como el metano, que es un gas incoloro.</p>
+        <div class="keywords">
+          <span class="tag">Biorreactor</span>
+          <span class="tag">Vinaza</span>
+          <span class="tag">Biodigestión</span>
+          <span class="tag">Metano</span>
+          <span class="tag">Biogás</span>
+        </div>
+      </div>
+      <div class="desc-card">
+        <div class="lang-badge" style="color:var(--text3);">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;flex-shrink:0"><rect width="18" height="14" fill="#B22234"/><rect y="1.08" width="18" height="1.08" fill="white"/><rect y="3.23" width="18" height="1.08" fill="white"/><rect y="5.38" width="18" height="1.08" fill="white"/><rect y="7.54" width="18" height="1.08" fill="white"/><rect y="9.69" width="18" height="1.08" fill="white"/><rect y="11.85" width="18" height="1.08" fill="white"/><rect width="7.2" height="7.54" fill="#3C3B6E"/></svg>
+        </div>
+        <p style="font-style:italic; color:var(--text3);">Our project involves the creation of an <strong style="color:var(--accent2)">80-liter bioreactor</strong> for the production of biogas, a clean and sustainable energy source obtained from <strong style="color:var(--accent2)">vinasse</strong>, a byproduct of the tequila industry.</p>
+        <p style="font-style:italic; color:var(--text3);">This system will leverage anaerobic <strong style="color:var(--accent2)">biodigestion</strong> to convert this liquid waste into usable methane gas as fuel. We focused not only on technological efficiency but also on a clean and modern design that facilitates its integration and use.</p>
+        <p style="font-style:italic; color:var(--text3);">We chose the name <strong style="color:var(--accent2)">"MetAhmo"</strong> because it reflects the essence of the project: the first part refers to methane, the main fuel generated, while "Ahmo" in Nahuatl means negation and, in some interpretations, is associated with the invisible, such as methane, a colorless gas.</p>
+        <div class="keywords">
+          <span class="tag">Bioreactor</span>
+          <span class="tag">Vinasse</span>
+          <span class="tag">Biodigestion</span>
+          <span class="tag">Methane</span>
+          <span class="tag">Biogas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ JUSTIFICACIÓN -->
+<section id="justificacion">
+  <div class="section-inner reveal">
+    <div class="section-label">03 / JUSTIFICACIÓN</div>
+    <h2 class="section-title">Una energía <em>Emergente</em></h2>
+    <div class="just-content">
+      <p>La generación de energía a partir de combustibles fósiles ha causado graves daños ambientales, conflictos geopolíticos y enfrenta un futuro limitado al no ser renovable. Aunque existen alternativas sustentables, muchas son costosas y poco accesibles para comunidades en desarrollo.</p>
+      <p>Una solución viable y accesible es la producción de metano a partir de residuos orgánicos mediante <strong>biodigestión anaerobia</strong>, un proceso natural utilizado desde el siglo XIV. Este biogás puede emplearse como combustible limpio y sostenible, con baja demanda de recursos.</p>
+      <p>En México, la producción de biogás representa solo el <strong>0.02%</strong> de la producción energética, según el estudio <em>"Biogas as an alternative source of primary energy for the Jalisco state, México"</em>, aunque se reconoce su gran potencial.</p>
+      <p>La <strong>vinaza</strong> es el residuo líquido que queda después de la fermentación en la producción de vino, rico en componentes orgánicos. En Jalisco, para producir un litro de tequila se desechan aproximadamente <strong>10–12 litros</strong> de vinazas y <strong>3.5–7 kg</strong> de bagazo de agave.</p>
+      <p>La industria tequilera produce más de <strong>3.8 mil millones de litros</strong> de vinaza al año, que a menudo se liberan en cuerpos de agua sin tratamiento previo, causando un daño ambiental inmenso.</p>
+      <p>El Banco Mundial destaca que la digestión anaerobia no solo es una alternativa energética viable, sino que también reduce significativamente el impacto ambiental. Se estima que el uso de biogás podría evitar entre <strong>1.5 y 2.0 millones de toneladas de CO₂-eq</strong> al año.</p>
+    </div>
+    <div class="stat-row" style="columns:1; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:2.5rem;">
+      <div class="stat-card">
+        <span class="stat-num">0.02%</span>
+        <div class="stat-label">DE ENERGÍA EN MÉXICO VÍA BIOGÁS</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">3.8B</span>
+        <div class="stat-label">LITROS DE VINAZA/AÑO</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">435K</span>
+        <div class="stat-label">AUTOS EQUIVALENTES EVITADOS</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2M</span>
+        <div class="stat-label">TON CO₂-EQ REDUCIDAS</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button class="btn-outline" onclick="openModal('modal-futuro')">Ver Aplicaciones Futuras →</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ OBJETIVOS -->
+<section id="objetivos">
+  <div class="section-inner reveal">
+    <div class="section-label">04 / OBJETIVOS</div>
+    <h2 class="section-title">General y <em>Específicos</em></h2>
+    <div class="obj-main">
+      El objetivo de este proyecto es <strong>aprovechar al máximo la vinaza</strong>, utilizarla como materia prima para la producción de biogás. En este proceso se busca contribuir a la disminución de la contaminación que se genera por la inadecuada gestión de este residuo y transformarlo en una <strong>fuente de energía renovable</strong>. Con esta solución se espera apoyar en la disminución del impacto ambiental vinculada con la industria etanolera.
+    </div>
+    <div class="obj-grid">
+      <div class="obj-item" onclick="openModal('modal-obj1')">
+        <div class="obj-num">OBJ. 01 →</div>
+        <h4>Evaluar el potencial de la vinaza</h4>
+        <p>Investigación exhaustiva sobre la capacidad de la vinaza para generar biogás a partir de fuentes confiables.</p>
+      </div>
+      <div class="obj-item" onclick="openModal('modal-obj2')">
+        <div class="obj-num">OBJ. 02 →</div>
+        <h4>Investigar la funcionalidad del bioreactor</h4>
+        <p>Estudio de eficiencia, sostenibilidad, economía y aplicaciones de los bioreactores.</p>
+      </div>
+      <div class="obj-item" onclick="openModal('modal-obj3')">
+        <div class="obj-num">OBJ. 03 →</div>
+        <h4>Diseño práctico y accesible</h4>
+        <p>Análisis del diseño de bioreactores para definir un modelo que cumpla con las características deseadas.</p>
+      </div>
+      <div class="obj-item" onclick="openModal('modal-obj4')">
+        <div class="obj-num">OBJ. 04 →</div>
+        <h4>Pruebas del prototipo</h4>
+        <p>Desarrollar un prototipo funcional para realizar pruebas y garantizar su rendimiento y adecuada ejecución.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ METODOLOGÍA -->
+<section id="metodologia">
+  <div class="section-inner reveal">
+    <div class="section-label">05 / DESCRIPCIÓN METODOLÓGICA</div>
+    <h2 class="section-title">Proceso de <em>Desarrollo</em></h2>
+    <div class="method-steps">
+      <div class="method-step">
+        <div class="step-dot"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>Etapa de Investigación y Planeación</h3>
+          <ul class="step-list">
+            <li>Revisión bibliográfica sobre el potencial de la vinaza en producción de biogás</li>
+            <li>Definición de requisitos y elementos del bioreactor (capacidad, tipos y condiciones de operación)</li>
+            <li>Evaluación de materiales: resistencia, vida útil, costos</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="step-dot" style="background:var(--gold)"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Diseño del Prototipo</h3>
+          <ul class="step-list">
+            <li>Diagrama de representación del proceso de inicio a final</li>
+            <li>Selección de materiales adecuados y diseño estructural seguro y eficiente</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="step-dot" style="background:var(--accent2)"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14l.5-8"/><path d="M6 6l5-2 2 4"/></svg>Pruebas para su Validación</h3>
+          <ul class="step-list">
+            <li>Evaluación de la producción de biogás por medio de pruebas piloto</li>
+            <li>Monitoreo de parámetros: temperatura, producción diaria</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="step-dot" style="background:var(--accent3)"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Análisis de Resultados</h3>
+          <ul class="step-list">
+            <li>Adecuaciones en diseño u operación de acuerdo con los resultados obtenidos en las pruebas iniciales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ DIAGRAMAS -->
+<section id="diagrama">
+  <div class="section-inner reveal">
+    <div class="section-label">05b / DIAGRAMAS</div>
+    <h2 class="section-title">Esquemas del <em>Sistema</em></h2>
+    <div class="diagram-grid">
+      <div class="diagram-card">
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:6px"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>Fig. 1 — Flujo de Desarrollo</h3>
+        <div class="flow">
+          <div class="flow-node">Etapa de Investigación</div>
+          <ul class="flow-bullets">
+            <li>Investigación</li>
+            <li>Especificaciones</li>
+            <li>Selección de materiales</li>
+          </ul>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Diseño del Prototipo</div>
+          <ul class="flow-bullets">
+            <li>Esquema de función</li>
+            <li>Diseño estructural</li>
+          </ul>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Pruebas de Validación</div>
+          <ul class="flow-bullets">
+            <li>Pruebas iniciales</li>
+          </ul>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node" style="border-color:var(--gold); color:var(--gold);">Análisis de Resultados</div>
+          <ul class="flow-bullets">
+            <li>Ajustes finales</li>
+          </ul>
+        </div>
+      </div>
+      <div class="diagram-card">
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:6px"><path d="M9 3h6l1 9H8L9 3z"/><path d="M6.5 12c-1.5 1.5-2 3-2 4.5A4.5 4.5 0 0 0 9 21h6a4.5 4.5 0 0 0 4.5-4.5c0-1.5-.5-3-2-4.5"/></svg>Fig. 2 — Bioreactor 80L</h3>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--text3); padding:1rem 0;">
+          <div style="background:var(--surface); border:2px solid var(--border); border-radius:6px; padding:0.5rem 1.25rem; color:var(--accent); font-size:0.7rem; display:flex; gap:0.5rem; align-items:center;">⬤ Ingreso de vinaza con tapa</div>
+          <div style="background:var(--surface); border:2px solid var(--border); border-radius:6px; padding:0.5rem 1.25rem; color:var(--accent); font-size:0.7rem; display:flex; gap:0.5rem; align-items:center;">⬤ Válvula de salida de gas</div>
+          <div style="background:var(--surface2); border:2px solid var(--accent); border-radius:6px; padding:0.5rem 1.25rem; color:var(--text); font-size:0.7rem; width:90%; text-align:center;">TAPA Y CIERRE HERMÉTICO</div>
+          <div style="background:linear-gradient(180deg,var(--surface2),var(--surface)); border:2px solid var(--accent); border-top:none; border-bottom:none; padding:1.5rem 1.25rem; width:100%; text-align:center; color:var(--text2); position:relative;">
+            Sección de almacenamiento de gas
+            <div style="position:absolute; right:-8px; top:50%; transform:translateY(-50%); font-size:0.65rem; color:var(--gold); white-space:nowrap; background:var(--bg2); padding:0.2rem 0.4rem; border-radius:4px;">→ Salida de bioabono</div>
+          </div>
+          <div style="background:var(--surface2); border:2px solid var(--accent); border-top:none; border-radius:0 0 8px 8px; padding:0.75rem 1.25rem; width:90%; text-align:center; color:var(--text3); font-size:0.7rem;">
+            ⬤ Desagüe
+          </div>
+          <div style="margin-top:1rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:0.75rem 1rem; font-size:0.68rem; color:var(--text3); text-align:left; width:100%;">
+            <em>Capacidad total: 80 litros. El sistema incluye cierre hermético para optimizar la producción de biogás mediante biodigestión anaerobia.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ BENEFICIARIOS -->
+<section id="beneficiarios">
+  <div class="section-inner reveal">
+    <div class="section-label">06 / BENEFICIARIOS</div>
+    <h2 class="section-title">¿Quiénes se <em>Benefician</em>?</h2>
+    <div class="bene-grid">
+      <div class="bene-card">
+        <span class="bene-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg></span>
+        <h3>Industria Tequilera</h3>
+        <p>Solución sostenible para la gestión de la vinaza generada en la producción de tequila, reduciendo gastos de tratamiento y produciendo biogás para uso propio.</p>
+      </div>
+      <div class="bene-card">
+        <span class="bene-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.5c0 0 .92-3.1 2.15-5.5C4.5 14 4 13 4 11.5 4 7.5 7.5 5 12 4c0 0 3.5 0 5 4z"/><path d="M12 12C8 14 5 16.5 3.82 19.5"/></svg></span>
+        <h3>Comunidades Rurales</h3>
+        <p>Mejora de la calidad ambiental en comunidades cercanas a plantas tequileras, disminuyendo la contaminación de aguas y suelos con manejo sostenible.</p>
+      </div>
+      <div class="bene-card">
+        <span class="bene-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+        <h3>Grupos Ambientalistas</h3>
+        <p>Apoyan prácticas que mitiguen el impacto ambiental. El proyecto promueve la conservación ambiental y las prácticas sostenibles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ COSTOS -->
+<section id="costos">
+  <div class="section-inner reveal">
+    <div class="section-label">07 / COSTOS DE IMPLEMENTACIÓN</div>
+    <h2 class="section-title">Presupuesto del <em>Proyecto</em></h2>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>CATEGORÍA</th>
+          <th>COMPONENTE</th>
+          <th>COSTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="5" style="color:var(--accent); font-weight:600;">Bioreactor</td>
+          <td>Contenedor o tanque (80 litros)</td>
+          <td>—</td>
+        </tr>
+        <tr><td>Tuberías de entrada y salida</td><td>—</td></tr>
+        <tr><td>Válvulas</td><td>—</td></tr>
+        <tr><td>Accesorios</td><td>—</td></tr>
+        <tr><td>Filtros</td><td>—</td></tr>
+        <tr>
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--text3);">Subtotal Bioreactor</td>
+          <td style="color:var(--accent2); font-weight:600;">$900.00</td>
+        </tr>
+        <tr>
+          <td rowspan="2" style="color:var(--gold); font-weight:600;">Materia Prima</td>
+          <td>Vinaza</td>
+          <td>—</td>
+        </tr>
+        <tr><td>Agua</td><td>—</td></tr>
+        <tr>
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--text3);">Subtotal Materia Prima</td>
+          <td style="color:var(--gold2); font-weight:600;">$600.00</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total">
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; letter-spacing:0.1em;">TOTAL FINAL</td>
+          <td>$1,500.00 MXN</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ LOCALIZACIÓN -->
+<section id="localizacion">
+  <div class="section-inner reveal">
+    <div class="section-label">08 / LOCALIZACIÓN GEOGRÁFICA</div>
+    <h2 class="section-title">Ubicación del <em>Proyecto</em></h2>
+    <div class="loc-card">
+      <div class="loc-icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="loc-info">
+        <h3>Escuela Politécnica "Ing. Jorge Matute Remus"</h3>
+        <p>Sistema de Educación Media Superior — Universidad de Guadalajara</p>
+        <p class="loc-detail">La Grana 430-1, San José del Bajío 45180<br>Zapopan, Jalisco, México</p>
+        <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <span class="tag">UDG</span>
+          <span class="tag">ZAPOPAN</span>
+          <span class="tag">JALISCO</span>
+          <span class="tag">SEMS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ EQUIPO -->
+<section id="equipo">
+  <div class="section-inner reveal">
+    <div class="section-label">02 / EQUIPO BIOTECH'S</div>
+    <h2 class="section-title">Conoce al <em>Equipo</em></h2>
+    <div class="team-grid">
+      <div class="member-card" onclick="openModal('modal-part1')">
+        <div class="member-avatar">FR</div>
+        <h3>Francisco Ulises Rodríguez Pérez</h3>
+        <div class="member-email">ksufkua@gmail.com</div>
+        <div class="member-detail">Matrícula: 221949051 · Zapopan, Jalisco</div>
+      </div>
+      <div class="member-card" onclick="openModal('modal-part2')">
+        <div class="member-avatar">CR</div>
+        <h3>Carlos Alberto Rivera Montes</h3>
+        <div class="member-email">cr2886099@gmail.com</div>
+        <div class="member-detail">Matrícula: 221278564 · Zapopan, Jalisco</div>
+      </div>
+      <div class="member-card" onclick="openModal('modal-part3')">
+        <div class="member-avatar">RE</div>
+        <h3>Regina Elizabeth Aranzazú Orozco</h3>
+        <div class="member-email">lizzyaranzazu03@gmail.com</div>
+        <div class="member-detail">Matrícula: 221948381 · Zapopan, Jalisco</div>
+      </div>
+      <div class="advisor-card">
+        <div class="advisor-avatar">MV</div>
+        <div class="advisor-info">
+          <div class="role"><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-1px;margin-right:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>PROFESOR ASESOR</div>
+          <h3>Mario Alberto Vega Sánchez</h3>
+          <p>mario.vega@academicos.udg.mx · Tel: 9934053431</p>
+          <p style="font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--text3); margin-top:0.3rem;">Politécnica Ing. Jorge Matute Remus · UDG · Matrícula: 2966733</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ VIDEO -->
+<section id="video">
+  <div class="section-inner reveal">
+    <div class="section-label">VIDEO / PRESENTACIÓN</div>
+    <h2 class="section-title" style="text-align:center;">Biotech's en <em>Acción</em></h2>
+    <div class="video-wrap">
+      <iframe class="video-embed" src="https://www.youtube.com/embed/tpedhdbzDyE?rel=0&modestbranding=1" title="metAHMO - Biotech's Reto STEAM Jalisco 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="video-caption">BIOTECH'S — Reto STEAM Jalisco 2025 · Proyecto metAHMO</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ BIBLIOGRAFÍA -->
+<section id="bibliografia">
+  <div class="section-inner reveal">
+    <div class="section-label">09 / BIBLIOGRAFÍA</div>
+    <h2 class="section-title">Fuentes de <em>Información</em></h2>
+    <div class="bib-list">
+      <div class="bib-item"><span class="bib-num">[01]</span><a href="https://www.scielo.org.mx/scielo.php?pid=S1405-77432017000300307&script=sci_arttext" target="_blank">SciELO — Biogas as alternative source, Jalisco state, México (2017)</a></div>
+      <div class="bib-item"><span class="bib-num">[02]</span><a href="https://www.fao.org/4/as400s/as400s.pdf" target="_blank">FAO — as400s.pdf · Biogás y digestión anaerobia</a></div>
+      <div class="bib-item"><span class="bib-num">[03]</span><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2017/Dec/IRENA_Biogas_for_domestic_cooking_2017.pdf" target="_blank">IRENA — Biogas for Domestic Cooking (2017)</a></div>
+      <div class="bib-item"><span class="bib-num">[04]</span><a href="https://blogs.worldbank.org/en/water/numbers-and-alessandro-volta-don-t-lie-anaerobic-digestion-potential-solution-towards-sustainable" target="_blank">Banco Mundial — Los números y Alessandro Volta no mienten (Digestión Anaerobia)</a></div>
+      <div class="bib-item"><span class="bib-num">[05]</span><a href="https://www.snv.org/search?searchTerm=biogas&page=3" target="_blank">SNV — Biogas (pág. 3)</a></div>
+      <div class="bib-item"><span class="bib-num">[06]</span><a href="https://www.europeanbiogas.eu/about-biogas-and-biomethane/" target="_blank">European Biogas Association — About Biogas and Biomethane</a></div>
+      <div class="bib-item"><span class="bib-num">[07]</span><a href="https://bioenergyinternational.com/another-year-of-record-growth-for-american-biogas-industry/" target="_blank">Bioenergy International — Record Growth American Biogas Industry</a></div>
+      <div class="bib-item"><span class="bib-num">[08]</span><a href="https://www.energy.gov/eere/fuelcells/articles/biogas-technologies-and-integration-fuel-cells" target="_blank">U.S. DOE — Biogas Technologies and Integration with Fuel Cells</a></div>
+      <div class="bib-item"><span class="bib-num">[09]</span><a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle" target="_blank">EPA — GHG Emissions from a Typical Passenger Vehicle</a></div>
+      <div class="bib-item"><span class="bib-num">[10]</span><a href="https://www.epa.gov/climateleadership/ghg-emission-factors-hub" target="_blank">EPA — GHG Emission Factors Hub</a></div>
+      <div class="bib-item"><span class="bib-num">[11]</span><a href="https://www.gob.mx/cms/uploads/attachment/file/710897/Cuaderno8_PobrezaEnerg_tica_V140322.pdf" target="_blank">Gobierno MX — Cuaderno 8: Pobreza Energética</a></div>
+      <div class="bib-item"><span class="bib-num">[12]</span><a href="https://www.redalyc.org/pdf/904/90430202.pdf" target="_blank">REDALYC — Artículo (904/90430202)</a></div>
+      <div class="bib-item"><span class="bib-num">[13]</span><a href="https://www.scielo.org.mx/scielo.php?pid=S0188-49992018000300373&script=sci_arttext" target="_blank">SciELO — (S0188-49992018000300373)</a></div>
+      <div class="bib-item"><span class="bib-num">[14]</span><a href="https://www.ceajalisco.gob.mx/sites/MicrositioCAA/docs/2015/07_vinanzas_rio_tonaya.pdf" target="_blank">CEA Jalisco — Vinazas Río Tonaya (2015)</a></div>
+      <div class="bib-item"><span class="bib-num">[15]</span><a href="https://www.gob.mx/cms/uploads/attachment/file/171932/Nota_Informativa_Septiembre_Vinazas.pdf" target="_blank">Gobierno MX — Nota Informativa Vinazas</a></div>
+      <div class="bib-item"><span class="bib-num">[16]</span><a href="https://www.redalyc.org/journal/933/93368279005/" target="_blank">REDALYC Journal — 93368279005</a></div>
+      <div class="bib-item"><span class="bib-num">[17]</span><a href="https://arxiv.org/pdf/2105.14287" target="_blank">arXiv — 2105.14287</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="footer-logo">metAHMO</div>
+  <div class="footer-team">BIOTECH'S · RETO STEAM JALISCO 2025</div>
+  <div class="footer-copy">Politécnica Ing. Jorge Matute Remus · Universidad de Guadalajara · Zapopan, Jalisco</div>
+</footer>
+
+<!-- ══════════════════════════════════════════ MODALS -->
+
+<!-- Modal Video -->
+<div class="modal-overlay" id="modal-video" onclick="handleOverlayClick(event,'modal-video')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-video')">✕</button>
+    <div class="modal-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-1px;margin-right:4px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>VIDEO PRESENTACIÓN</div>
+    <div class="modal-title">Biotech's en Acción</div>
+    <div class="modal-body">
+      <div style="aspect-ratio:16/9; margin-bottom:1rem; border-radius:10px; overflow:hidden;">
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tpedhdbzDyE?rel=0&modestbranding=1" title="metAHMO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <p>Video oficial del equipo Biotech's presentando el proyecto metAHMO en el Reto STEAM Jalisco 2025.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Futuro -->
+<div class="modal-overlay" id="modal-futuro" onclick="handleOverlayClick(event,'modal-futuro')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-futuro')">✕</button>
+    <div class="modal-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-1px;margin-right:4px"><path d="M4.5 16.5c-1.5 1.5-1 5.5 0 6.5 1 .5 5-.5 6.5-2"/><path d="M7 17c0 0 4-1 7-4s5-7 5-7-4 2-7 5-5 6-5 6z"/><path d="M15 5c0 0 1 1 1 3"/><circle cx="9" cy="15" r="1"/></svg>APLICACIONES FUTURAS</div>
+    <div class="modal-title">Futuro Prometedor</div>
+    <div class="modal-body">
+      <p>Si bien el equipo actualmente cuenta con recursos, tiempo y habilidades limitadas para implementar nuevas tecnologías en el proyecto, es innegable el potencial del bioreactor más allá de la producción de biogás.</p>
+      <ul>
+        <li><strong>Biodiesel:</strong> Generación de subproductos con valor tecnológico. La producción requiere procesos de purificación química, pero es técnicamente viable dentro del sistema.</li>
+        <li><strong>Motores de combustión:</strong> Adaptación de motores originalmente diseñados para gasolina para operar con etanol generado en el reactor.</li>
+        <li><strong>Bioplásticos (PHA):</strong> Polihidroxialcanoatos, biopolímeros biodegradables producidos por bacterias y algas en respuesta a condiciones de estrés, como material de almacenamiento de energía.</li>
+      </ul>
+      <p>Integrar estos procesos al bioreactor lo convertiría en una herramienta aún más versátil y sostenible con impacto multisectorial.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Obj 1 -->
+<div class="modal-overlay" id="modal-obj1" onclick="handleOverlayClick(event,'modal-obj1')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-obj1')">✕</button>
+    <div class="modal-sub">OBJETIVO ESPECÍFICO 01</div>
+    <div class="modal-title">Potencial de la Vinaza</div>
+    <div class="modal-body">
+      <p><strong>Evaluar el potencial de la vinaza para la producción de biogás:</strong></p>
+      <p>Realizar una exhaustiva investigación de fuentes confiables que afirmen la capacidad de la vinaza para generar biogás. Esto incluye revisión de literatura científica, estudios académicos y reportes técnicos de organismos como IRENA, FAO y SciELO.</p>
+      <ul>
+        <li>Revisión de artículos científicos indexados</li>
+        <li>Consulta de estudios específicos para Jalisco, México</li>
+        <li>Análisis de rendimiento energético de la vinaza</li>
+        <li>Comparación con otros sustratos orgánicos</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Obj 2 -->
+<div class="modal-overlay" id="modal-obj2" onclick="handleOverlayClick(event,'modal-obj2')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-obj2')">✕</button>
+    <div class="modal-sub">OBJETIVO ESPECÍFICO 02</div>
+    <div class="modal-title">Funcionalidad del Bioreactor</div>
+    <div class="modal-body">
+      <p><strong>Investigar la funcionalidad de un bioreactor para un desarrollo eficiente:</strong></p>
+      <p>Estudio de la eficiencia, sostenibilidad, economía y aplicaciones de los bioreactores y sus resultados para poder optar por el más acertado a los objetivos del proyecto.</p>
+      <ul>
+        <li>Análisis de tipos de bioreactores: batch, continuo, semicontinuo</li>
+        <li>Evaluación de condiciones óptimas de operación</li>
+        <li>Estudio de microorganismos metanogénicos</li>
+        <li>Revisión de casos de éxito en proyectos similares</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Obj 3 -->
+<div class="modal-overlay" id="modal-obj3" onclick="handleOverlayClick(event,'modal-obj3')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-obj3')">✕</button>
+    <div class="modal-sub">OBJETIVO ESPECÍFICO 03</div>
+    <div class="modal-title">Diseño Práctico y Accesible</div>
+    <div class="modal-body">
+      <p><strong>Desarrollar un diseño práctico y accesible para su fácil implementación:</strong></p>
+      <p>Análisis del diseño de bioreactores para definir un modelo y un tipo que logre cumplir con las características que se desean para su óptimo funcionamiento e implementación.</p>
+      <ul>
+        <li>Diseño de un bioreactor de 80 litros de capacidad</li>
+        <li>Selección de materiales resistentes y de bajo costo</li>
+        <li>Cierre hermético para optimizar producción de biogás</li>
+        <li>Sistema de salida para gas, bioabono y desagüe</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Obj 4 -->
+<div class="modal-overlay" id="modal-obj4" onclick="handleOverlayClick(event,'modal-obj4')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-obj4')">✕</button>
+    <div class="modal-sub">OBJETIVO ESPECÍFICO 04</div>
+    <div class="modal-title">Pruebas del Prototipo</div>
+    <div class="modal-body">
+      <p><strong>Llevar a cabo pruebas del prototipo para asegurar su correcto funcionamiento:</strong></p>
+      <p>Desarrollar un prototipo funcional para realizar pruebas y garantizar su rendimiento y adecuada ejecución bajo condiciones reales de operación.</p>
+      <ul>
+        <li>Pruebas piloto con vinaza real de la industria tequilera</li>
+        <li>Monitoreo de temperatura y producción diaria de gas</li>
+        <li>Medición de parámetros de eficiencia</li>
+        <li>Ajustes iterativos basados en resultados obtenidos</li>
+        <li>Documentación detallada del proceso de validación</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Participante 1 -->
+<div class="modal-overlay" id="modal-part1" onclick="handleOverlayClick(event,'modal-part1')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-part1')">✕</button>
+    <div class="modal-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-1px;margin-right:4px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>PARTICIPANTE 1</div>
+    <div class="modal-title">Francisco Ulises Rodríguez Pérez</div>
+    <div class="modal-body">
+      <ul>
+        <li><strong>Correo:</strong> ksufkua@gmail.com</li>
+        <li><strong>Matrícula:</strong> 221949051</li>
+        <li><strong>No. Celular:</strong> 3329471421</li>
+        <li><strong>Escuela:</strong> Politécnica Ing. Jorge Matute Remus</li>
+        <li><strong>Subsistema:</strong> UDG</li>
+        <li><strong>Municipio:</strong> Zapopan, Jalisco</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Participante 2 -->
+<div class="modal-overlay" id="modal-part2" onclick="handleOverlayClick(event,'modal-part2')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-part2')">✕</button>
+    <div class="modal-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-1px;margin-right:4px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>PARTICIPANTE 2</div>
+    <div class="modal-title">Carlos Alberto Rivera Montes</div>
+    <div class="modal-body">
+      <ul>
+        <li><strong>Correo:</strong> cr2886099@gmail.com</li>
+        <li><strong>Matrícula:</strong> 221278564</li>
+        <li><strong>No. Celular:</strong> 3334896009</li>
+        <li><strong>Teléfono:</strong> 3328007142</li>
+        <li><strong>Escuela:</strong> Politécnica Ing. Jorge Matute Remus</li>
+        <li><strong>Subsistema:</strong> UDG</li>
+        <li><strong>Municipio:</strong> Zapopan, Jalisco</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Participante 3 -->
+<div class="modal-overlay" id="modal-part3" onclick="handleOverlayClick(event,'modal-part3')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-part3')">✕</button>
+    <div class="modal-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-1px;margin-right:4px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>PARTICIPANTE 3</div>
+    <div class="modal-title">Regina Elizabeth Aranzazú Orozco</div>
+    <div class="modal-body">
+      <ul>
+        <li><strong>Correo:</strong> lizzyaranzazu03@gmail.com</li>
+        <li><strong>Matrícula:</strong> 221948381</li>
+        <li><strong>No. Celular:</strong> 3313116598</li>
+        <li><strong>Teléfono:</strong> 3333664455</li>
+        <li><strong>Escuela:</strong> Politécnica Ing. Jorge Matute Remus</li>
+        <li><strong>Subsistema:</strong> UDG</li>
+        <li><strong>Municipio:</strong> Zapopan, Jalisco</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ SCRIPTS -->
+<script>
+  // THEME
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('iconSun').style.display = isDark ? 'none' : 'block';
+    document.getElementById('iconMoon').style.display = isDark ? 'block' : 'none';
+    document.getElementById('themeLabel').textContent = isDark ? 'Oscuro' : 'Claro';
+  }
+
+  // MOBILE MENU
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // MODALS
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function handleOverlayClick(e, id) {
+    if (e.target === document.getElementById(id)) closeModal(id);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => {
+        m.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
+  // SCROLL REVEAL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(0,0,0,0.3)' : 'none';
+  });
+</script>
+</body>
+</html>
