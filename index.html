@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>metAHMO — Reto STEAM Jalisco 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- RIPPLE BACKGROUND -->
+<div class="ripple-bg" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#inicio">met<span class="dot">A</span>HMO</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#descripcion">Descripción</a></li>
+    <li><a href="#justificacion">Justificación</a></li>
+    <li><a href="#objetivos">Objetivos</a></li>
+    <li><a href="#metodologia">Metodología</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#bibliografia">Bibliografía</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+      <span class="theme-icon" id="themeIcon">
+        <svg id="iconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="iconMoon" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+      <span id="themeLabel">Claro</span>
+    </button>
+    <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════ HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-badge">RETO STEAM JALISCO 2025 — BIOTECH'S</div>
+  <h1 class="hero-title">
+    <span class="main">met<span class="accent-word">A</span><span class="gold-word">H</span>MO</span>
+  </h1>
+  <p class="hero-subtitle">
+    Biogás renovable a partir de vinaza tequilera.<br>
+    <em>Energía limpia desde lo invisible.</em>
+  </p>
+  <div class="hero-tags">
+    <span class="tag">BIORREACTOR</span>
+    <span class="tag">VINAZA</span>
+    <span class="tag">BIODIGESTIÓN</span>
+    <span class="tag">METANO</span>
+    <span class="tag">BIOGÁS</span>
+    <span class="tag">JALISCO</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn-primary" href="#descripcion">Explorar Proyecto</a>
+    <button class="btn-outline" onclick="openModal('modal-video')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;vertical-align:-2px;margin-right:0.3rem"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>Ver Video</button>
+  </div>
+  <div class="scroll-hint">SCROLL<br>▼</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ DESCRIPCIÓN -->
+<section id="descripcion">
+  <div class="section-inner reveal">
+    <div class="section-label">02 / DESCRIPCIÓN DEL PROYECTO</div>
+    <h2 class="section-title">¿Qué es <em>metAHMO</em>?</h2>
+    <div class="desc-grid">
+      <div class="desc-card">
+        <div class="lang-badge">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;flex-shrink:0"><rect width="6" height="14" fill="#006847"/><rect x="6" width="6" height="14" fill="#FFFFFF"/><rect x="12" width="6" height="14" fill="#CE1126"/></svg>
+          ESPAÑOL
+        </div>
+        <p>Nuestro proyecto consiste en la creación de un <strong>bioreactor de 80 litros</strong> para la producción de biogás, una fuente de energía limpia y sustentable obtenida a partir de la <strong>vinaza</strong>, residuo líquido de la industria tequilera.</p>
+        <p>Este sistema aprovechará la <strong>biodigestión anaerobia</strong> para convertir este residuo líquido en gas metano utilizable como combustible. No solo nos enfocamos en la eficiencia energética, sino también en la sostenibilidad ambiental.</p>
+        <p>Elegimos el nombre <strong>"MetAhmo"</strong> porque refleja la esencia del proyecto: la primera parte hace referencia al metano, el principal combustible generado, mientras que "Ahmo", en náhuatl, significa agua.</p>
+        <div class="keywords">
+          <span class="tag">Biorreactor</span>
+          <span class="tag">Vinaza</span>
+          <span class="tag">Biodigestión</span>
+          <span class="tag">Metano</span>
+          <span class="tag">Biogás</span>
+        </div>
+      </div>
+      <div class="desc-card">
+        <div class="lang-badge" style="color:var(--text3);">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;flex-shrink:0"><rect width="18" height="14" fill="#B22234"/><rect y="1" width="18" height="1" fill="#FFFFFF"/><rect y="3" width="18" height="1" fill="#FFFFFF"/><rect y="5" width="18" height="1" fill="#FFFFFF"/><rect y="7" width="18" height="1" fill="#FFFFFF"/><rect y="9" width="18" height="1" fill="#FFFFFF"/><rect y="11" width="18" height="1" fill="#FFFFFF"/><rect y="13" width="18" height="1" fill="#FFFFFF"/><rect width="7" height="7" fill="#3C3B6B"/></svg>
+          ENGLISH
+        </div>
+        <p style="font-style:italic; color:var(--text3);">Our project involves the creation of an <strong style="color:var(--accent2)">80-liter bioreactor</strong> for the production of biogas, a clean and sustainable energy source obtained from <strong style="color:var(--accent2)">vinasse</strong>, a liquid waste from the tequila industry.</p>
+        <p style="font-style:italic; color:var(--text3);">This system will leverage anaerobic <strong style="color:var(--accent2)">biodigestion</strong> to convert this liquid waste into usable methane gas as fuel. We focus not only on energy efficiency but also on environmental sustainability.</p>
+        <p style="font-style:italic; color:var(--text3);">We chose the name <strong style="color:var(--accent2)">"MetAhmo"</strong> because it reflects the essence of the project: the first part refers to methane, the main fuel generated, while "Ahmo" in Nahuatl means water.</p>
+        <div class="keywords">
+          <span class="tag">Bioreactor</span>
+          <span class="tag">Vinasse</span>
+          <span class="tag">Biodigestion</span>
+          <span class="tag">Methane</span>
+          <span class="tag">Biogas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ JUSTIFICACIÓN -->
+<section id="justificacion">
+  <div class="section-inner reveal">
+    <div class="section-label">03 / JUSTIFICACIÓN</div>
+    <h2 class="section-title">Una energía <em>Emergente</em></h2>
+    <div class="just-content">
+      <p>La generación de energía a partir de combustibles fósiles ha causado graves daños ambientales, conflictos geopolíticos y enfrenta un futuro limitado al no ser renovable. Aunque existen alternativas como la solar y eólica, estas tienen limitaciones en aplicaciones específicas.</p>
+      <p>Una solución viable y accesible es la producción de metano a partir de residuos orgánicos mediante <strong>biodigestión anaerobia</strong>, un proceso natural utilizado desde el siglo XIV en China.</p>
+      <p>En México, la producción de biogás representa solo el <strong>0.02%</strong> de la producción energética, según el estudio <em>"Biogas as an alternative source of primary energy for the generation of electricity"</em> de la Universidad de Guadalajara (2022).</p>
+      <p>La <strong>vinaza</strong> es el residuo líquido que queda después de la fermentación en la producción de vino, rico en componentes orgánicos. En Jalisco, para producir un litro de tequila se generan entre 10 a 15 litros de vinaza.</p>
+      <p>La industria tequilera produce más de <strong>3.8 mil millones de litros</strong> de vinaza al año, que a menudo se liberan en cuerpos de agua sin tratamiento previo, causando un daño ambiental irreversible.</p>
+      <p>El Banco Mundial destaca que la digestión anaerobia no solo es una alternativa energética viable, sino que también reduce significativamente el impacto ambiental. Se estima que el uso de biogás podría evitar la emisión de aproximadamente 2 millones de toneladas de CO₂ equivalente anuales.</p>
+    </div>
+    <div class="stat-row" style="columns:1; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:2.5rem;">
+      <div class="stat-card">
+        <span class="stat-num">0.02%</span>
+        <div class="stat-label">DE ENERGÍA EN MÉXICO VÍA BIOGÁS</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">3.8B</span>
+        <div class="stat-label">LITROS DE VINAZA/AÑO</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">435K</span>
+        <div class="stat-label">AUTOS EQUIVALENTES EVITADOS</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2M</span>
+        <div class="stat-label">TON CO₂-EQ REDUCIDAS</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button class="btn-outline" onclick="openModal('modal-futuro')">Ver Aplicaciones Futuras →</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ OBJETIVOS -->
+<section id="objetivos">
+  <div class="section-inner reveal">
+    <div class="section-label">04 / OBJETIVOS</div>
+    <h2 class="section-title">General y <em>Específicos</em></h2>
+    <div class="obj-main">
+      El objetivo de este proyecto es <strong>aprovechar al máximo la vinaza</strong>, utilizarla como materia prima para la producción de biogás. En este proceso se busca contribuir a la disminución de contaminación ambiental, generar energía renovable y demostrar la viabilidad técnica y económica de los bioreactores anaerobios.
+    </div>
+    <div class="obj-grid">
+      <div class="obj-item" onclick="openModal('modal-obj1')">
+        <div class="obj-num">OBJ. 01 →</div>
+        <h4>Evaluar el potencial de la vinaza</h4>
+        <p>Investigación exhaustiva sobre la capacidad de la vinaza para generar biogás a partir de fuentes confiables.</p>
+      </div>
+      <div class="obj-item" onclick="openModal('modal-obj2')">
+        <div class="obj-num">OBJ. 02 →</div>
+        <h4>Investigar la funcionalidad del bioreactor</h4>
+        <p>Estudio de eficiencia, sostenibilidad, economía y aplicaciones de los bioreactores.</p>
+      </div>
+      <div class="obj-item" onclick="openModal('modal-obj3')">
+        <div class="obj-num">OBJ. 03 →</div>
+        <h4>Diseño práctico y accesible</h4>
+        <p>Análisis del diseño de bioreactores para definir un modelo que cumpla con las características deseadas.</p>
+      </div>
+      <div class="obj-item" onclick="openModal('modal-obj4')">
+        <div class="obj-num">OBJ. 04 →</div>
+        <h4>Pruebas del prototipo</h4>
+        <p>Desarrollar un prototipo funcional para realizar pruebas y garantizar su rendimiento y adecuada ejecución.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ METODOLOGÍA -->
+<section id="metodologia">
+  <div class="section-inner reveal">
+    <div class="section-label">05 / DESCRIPCIÓN METODOLÓGICA</div>
+    <h2 class="section-title">Proceso de <em>Desarrollo</em></h2>
+    <div class="method-steps">
+      <div class="method-step">
+        <div class="step-dot"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:0.4rem"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>Etapa 1: Investigación</h3>
+          <ul class="step-list">
+            <li>Revisión bibliográfica sobre el potencial de la vinaza en producción de biogás</li>
+            <li>Definición de requisitos y elementos del bioreactor (capacidad, tipos y condiciones de operación)</li>
+            <li>Evaluación de materiales: resistencia, vida útil, costos</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="step-dot" style="background:var(--gold)"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:0.4rem"><path d="M12 2v20M2 12h20"></path></svg>Etapa 2: Diseño</h3>
+          <ul class="step-list">
+            <li>Diagrama de representación del proceso de inicio a final</li>
+            <li>Selección de materiales adecuados y diseño estructural seguro y eficiente</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="step-dot" style="background:var(--accent2)"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:0.4rem"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>Etapa 3: Pruebas</h3>
+          <ul class="step-list">
+            <li>Evaluación de la producción de biogás por medio de pruebas piloto</li>
+            <li>Monitoreo de parámetros: temperatura, producción diaria</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="step-dot" style="background:var(--accent3)"></div>
+        <div class="step-content">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:0.4rem"><polyline points="23 6 13 16 8 11 2 17"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>Etapa 4: Optimización</h3>
+          <ul class="step-list">
+            <li>Adecuaciones en diseño u operación de acuerdo con los resultados obtenidos en las pruebas iniciales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ DIAGRAMAS -->
+<section id="diagrama">
+  <div class="section-inner reveal">
+    <div class="section-label">05b / DIAGRAMAS</div>
+    <h2 class="section-title">Esquemas del <em>Sistema</em></h2>
+    <div class="diagram-grid">
+      <div class="diagram-card">
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:0.4rem"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>Flujo del Proceso</h3>
+        <div class="flow">
+          <div class="flow-node">Etapa de Investigación</div>
+          <ul class="flow-bullets">
+            <li>Investigación</li>
+            <li>Especificaciones</li>
+            <li>Selección de materiales</li>
+          </ul>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Diseño del Prototipo</div>
+          <ul class="flow-bullets">
+            <li>Esquema de función</li>
+            <li>Diseño estructural</li>
+          </ul>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Pruebas de Validación</div>
+          <ul class="flow-bullets">
+            <li>Pruebas iniciales</li>
+          </ul>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node" style="border-color:var(--gold); color:var(--gold);">Análisis de Resultados</div>
+          <ul class="flow-bullets">
+            <li>Ajustes finales</li>
+          </ul>
+        </div>
+      </div>
+      <div class="diagram-card">
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:0.4rem"><path d="M6 9l12 0"></path><path d="M6 20h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2z"></path><rect x="9" y="5" width="6" height="4"></rect></svg>Diagrama del Biorreactor</h3>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--text3); padding:1rem 0;">
+          <div style="background:var(--surface); border:2px solid var(--border); border-radius:6px; padding:0.5rem 1.25rem; color:var(--accent); font-size:0.7rem; display:flex; gap:0.5rem; align-items:center;">◉ Entrada de Vinaza</div>
+          <div style="background:var(--surface); border:2px solid var(--border); border-radius:6px; padding:0.5rem 1.25rem; color:var(--accent); font-size:0.7rem; display:flex; gap:0.5rem; align-items:center;">◉ Salida de Gas</div>
+          <div style="background:var(--surface2); border:2px solid var(--accent); border-radius:6px; padding:0.5rem 1.25rem; color:var(--text); font-size:0.7rem; width:90%; text-align:center;">TAPA Y VÁLVULAS DE CONTROL</div>
+          <div style="background:linear-gradient(180deg,var(--surface2),var(--surface)); border:2px solid var(--accent); border-top:none; border-bottom:none; padding:1.5rem 1.25rem; width:100%; text-align:center; position:relative; color:var(--text);">
+            Sección de almacenamiento de gas
+            <div style="position:absolute; right:-8px; top:50%; transform:translateY(-50%); font-size:0.65rem; color:var(--gold); white-space:nowrap; background:var(--bg2); padding:0.2rem 0.4rem; border-radius:2px;">→ Salida</div>
+          </div>
+          <div style="background:var(--surface2); border:2px solid var(--accent); border-top:none; border-radius:0 0 8px 8px; padding:0.75rem 1.25rem; width:90%; text-align:center; color:var(--text3);">
+            ⬤ Desagüe
+          </div>
+          <div style="margin-top:1rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:0.75rem 1rem; font-size:0.68rem; color:var(--text3); text-align:left; width:90%;">
+            <em>Capacidad total: 80 litros. El sistema incluye cierre hermético para optimizar la producción de biogás mediante biodigestión anaerobia.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ BENEFICIARIOS -->
+<section id="beneficiarios">
+  <div class="section-inner reveal">
+    <div class="section-label">06 / BENEFICIARIOS</div>
+    <h2 class="section-title">¿Quiénes se <em>Benefician</em>?</h2>
+    <div class="bene-grid">
+      <div class="bene-card">
+        <span class="bene-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7l-2-3h-3a2 2 0 0 0-2 3v2a2 2 0 0 0-2 2z"></path></svg></span>
+        <h3>Industria Tequilera</h3>
+        <p>Solución sostenible para la gestión de la vinaza generada en la producción de tequila, reduciendo gastos de tratamiento y produciendo biogás para uso propio.</p>
+      </div>
+      <div class="bene-card">
+        <span class="bene-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.45826 16.6559 2 21"></path><path d="M12.56 6.75C10.484 5.99 9.989 4.95 8 4"></path><path d="M13 17v4"></path><path d="M8 21h8"></path></svg></span>
+        <h3>Comunidades Rurales</h3>
+        <p>Mejora de la calidad ambiental en comunidades cercanas a plantas tequileras, disminuyendo la contaminación de aguas y suelos con manejo sostenible.</p>
+      </div>
+      <div class="bene-card">
+        <span class="bene-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></span>
+        <h3>Grupos Ambientalistas</h3>
+        <p>Apoyan prácticas que mitiguen el impacto ambiental. El proyecto promueve la conservación ambiental y las prácticas sostenibles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ COSTOS -->
+<section id="costos">
+  <div class="section-inner reveal">
+    <div class="section-label">07 / COSTOS DE IMPLEMENTACIÓN</div>
+    <h2 class="section-title">Presupuesto del <em>Proyecto</em></h2>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>CATEGORÍA</th>
+          <th>COMPONENTE</th>
+          <th>COSTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="5" style="color:var(--accent); font-weight:600;">Bioreactor</td>
+          <td>Contenedor o tanque (80 litros)</td>
+          <td>$350.00</td>
+        </tr>
+        <tr><td>Tuberías de entrada y salida</td><td>$120.00</td></tr>
+        <tr><td>Válvulas</td><td>$180.00</td></tr>
+        <tr><td>Accesorios</td><td>$150.00</td></tr>
+        <tr><td>Filtros</td><td>$100.00</td></tr>
+        <tr>
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--text3);">Subtotal Bioreactor</td>
+          <td style="color:var(--accent2); font-weight:600;">$900.00</td>
+        </tr>
+        <tr>
+          <td rowspan="2" style="color:var(--gold); font-weight:600;">Materia Prima</td>
+          <td>Vinaza (inicial)</td>
+          <td>$200.00</td>
+        </tr>
+        <tr><td>Bacterias anaerobias</td><td>$150.00</td></tr>
+        <tr>
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--text3);">Subtotal Materia Prima</td>
+          <td style="color:var(--accent2); font-weight:600;">$350.00</td>
+        </tr>
+        <tr>
+          <td rowspan="3" style="color:var(--accent3); font-weight:600;">Instrumentación</td>
+          <td>Termómetro digital</td>
+          <td>$75.00</td>
+        </tr>
+        <tr><td>Medidor de presión</td><td>$120.00</td></tr>
+        <tr><td>Cronómetro y herramientas</td><td>$85.00</td></tr>
+        <tr>
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--text3);">Subtotal Instrumentación</td>
+          <td style="color:var(--accent2); font-weight:600;">$280.00</td>
+        </tr>
+        <tr class="total">
+          <td colspan="2" style="font-family:'Space Mono',monospace; font-size:0.8rem; letter-spacing:0.05em; color:var(--text);">TOTAL PROYECTO</td>
+          <td>$1,530.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ LOCALIZACIÓN -->
+<section id="localizacion">
+  <div class="section-inner reveal">
+    <div class="section-label">08 / LOCALIZACIÓN</div>
+    <h2 class="section-title">¿Dónde se <em>Implementa</em>?</h2>
+    <div class="loc-card">
+      <span class="loc-icon">📍</span>
+      <div class="loc-info">
+        <h3>Jalisco, México</h3>
+        <p>El proyecto se implementará en una de las zonas productoras de tequila, con acceso directo a vinaza de plantas distileras locales.</p>
+        <div class="loc-detail">Tequila, Jalisco — Centro Productor Tequilero</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ EQUIPO -->
+<section id="equipo">
+  <div class="section-inner reveal">
+    <div class="section-label">09 / EQUIPO</div>
+    <h2 class="section-title">Nuestro <em>Equipo</em></h2>
+    <div class="team-grid">
+      <div class="member-card">
+        <div class="member-avatar">AS</div>
+        <h3>Alumno 1</h3>
+        <div class="member-email">alumno1@email.com</div>
+        <div class="member-detail">Investigación y análisis de vinaza</div>
+      </div>
+      <div class="member-card">
+        <div class="member-avatar">AS</div>
+        <h3>Alumno 2</h3>
+        <div class="member-email">alumno2@email.com</div>
+        <div class="member-detail">Diseño del bioreactor</div>
+      </div>
+      <div class="member-card">
+        <div class="member-avatar">AS</div>
+        <h3>Alumno 3</h3>
+        <div class="member-email">alumno3@email.com</div>
+        <div class="member-detail">Pruebas y monitoreo</div>
+      </div>
+      <div class="advisor-card">
+        <div class="advisor-avatar">AS</div>
+        <div class="advisor-info">
+          <div class="role">ASESOR / MENTOR</div>
+          <h3>Profesor Asesor</h3>
+          <p>Especialista en biotecnología y procesos anaerobios</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ BIBLIOGRAFÍA -->
+<section id="bibliografia">
+  <div class="section-inner reveal">
+    <div class="section-label">10 / BIBLIOGRAFÍA</div>
+    <h2 class="section-title">Fuentes de <em>Información</em></h2>
+    <div class="bib-list">
+      <div class="bib-item"><span class="bib-num">[1]</span><a href="#">Universidad de Guadalajara - "Biogas as an alternative source of primary energy" (2022)</a></div>
+      <div class="bib-item"><span class="bib-num">[2]</span><a href="#">Banco Mundial - "Anaerobic Digestion for Environmental Protection" (2021)</a></div>
+      <div class="bib-item"><span class="bib-num">[3]</span><a href="#">CONAGUA - "Gestión de residuos tequileros" (2020)</a></div>
+      <div class="bib-item"><span class="bib-num">[4]</span><a href="#">Journal of Environmental Management - "Vinasse Treatment Technologies" (2023)</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="footer-logo">metAHMO</div>
+  <div class="footer-team">BIOTECH'S — RETO STEAM JALISCO 2025</div>
+  <div class="footer-copy">© 2025 metAHMO. Todos los derechos reservados.</div>
+</footer>
+
+<!-- ══════════════════════════════════════════ MODALS ──────────────────────────────── -->
+
+<!-- Modal: Video -->
+<div class="modal-overlay" id="modal-video">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('modal-video')">✕</div>
+    <h2 class="modal-title">Presentación del Proyecto</h2>
+    <div class="modal-sub">VIDEO — RETO STEAM JALISCO 2025</div>
+    <div class="modal-body">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:8px;"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Future Applications -->
+<div class="modal-overlay" id="modal-futuro">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('modal-futuro')">✕</div>
+    <h2 class="modal-title">Aplicaciones Futuras</h2>
+    <div class="modal-sub">EXPANSIÓN Y ESCALABILIDAD</div>
+    <div class="modal-body">
+      <p>El bioreactor metAHMO puede ser escalado para:</p>
+      <ul>
+        <li><strong>Plantas tequileras pequeñas</strong> - Producción local de energía</li>
+        <li><strong>Comunidades rurales</strong> - Sistemas descentralizados</li>
+        <li><strong>Industria agrícola</strong> - Procesamiento de otros residuos orgánicos</li>
+        <li><strong>Plantas de tratamiento</strong> - Integración en sistemas existentes</li>
+      </ul>
+      <p>Se estima que con la implementación a escala industrial, podrían generarse <strong>435,000 autos equivalentes</strong> en energía renovable anuales.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modals: Objectives -->
+<div class="modal-overlay" id="modal-obj1">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('modal-obj1')">✕</div>
+    <h2 class="modal-title">Objetivo 1</h2>
+    <div class="modal-sub">EVALUAR EL POTENCIAL DE LA VINAZA</div>
+    <div class="modal-body">
+      <p>Se realizará una investigación exhaustiva para determinar:</p>
+      <ul>
+        <li>Composición química de la vinaza tequilera</li>
+        <li>Potencial de producción de metano</li>
+        <li>Factores que influyen en la biodigestión</li>
+        <li>Comparativa con otros residuos orgánicos</li>
+      </ul>
+      <p><strong>Resultado esperado:</strong> Datos técnicos validados que respalden la viabilidad del proyecto.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-obj2">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('modal-obj2')">✕</div>
+    <h2 class="modal-title">Objetivo 2</h2>
+    <div class="modal-sub">INVESTIGAR LA FUNCIONALIDAD DEL BIOREACTOR</div>
+    <div class="modal-body">
+      <p>Análisis profundo de los sistemas anaerobios:</p>
+      <ul>
+        <li>Eficiencia energética de diferentes diseños</li>
+        <li>Sostenibilidad ambiental y económica</li>
+        <li>Aplicaciones prácticas en la industria</li>
+        <li>Normativas y estándares internacionales</li>
+      </ul>
+      <p><strong>Resultado esperado:</strong> Documento técnico con especificaciones del diseño óptimo.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-obj3">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('modal-obj3')">✕</div>
+    <h2 class="modal-title">Objetivo 3</h2>
+    <div class="modal-sub">DISEÑO PRÁCTICO Y ACCESIBLE</div>
+    <div class="modal-body">
+      <p>Desarrollo de un prototipo funcional considerando:</p>
+      <ul>
+        <li>Materiales accesibles y de bajo costo</li>
+        <li>Facilidad de construcción y mantenimiento</li>
+        <li>Seguridad operacional</li>
+        <li>Capacidad de 80 litros como estándar piloto</li>
+      </ul>
+      <p><strong>Resultado esperado:</strong> Prototipo construido y funcional listo para pruebas.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-obj4">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('modal-obj4')">✕</div>
+    <h2 class="modal-title">Objetivo 4</h2>
+    <div class="modal-sub">PRUEBAS DEL PROTOTIPO</div>
+    <div class="modal-body">
+      <p>Validación experimental del sistema:</p>
+      <ul>
+        <li>Monitoreo de producción de biogás diaria</li>
+        <li>Control de temperatura y presión</li>
+        <li>Análisis de composición del gas</li>
+        <li>Documentación de resultados</li>
+      </ul>
+      <p><strong>Resultado esperado:</strong> Datos de rendimiento que validen la eficiencia del prototipo.</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
